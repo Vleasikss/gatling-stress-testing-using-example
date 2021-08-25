@@ -7,7 +7,6 @@ import io.gatling.http.Predef.http
 import io.gatling.http.protocol.HttpProtocolBuilder
 
 /**
- *
  * A simulation consists of:
  *  - protocol
  *  - defining requests
@@ -15,11 +14,9 @@ import io.gatling.http.protocol.HttpProtocolBuilder
  *  - injecting users
  *
  * @see <a href="https://reqres.in/"> fake data generator </a>
+ *
  */
-class CreateUserSimulation extends Simulation {
-
-  //language=JSON
-  val CREATE_USER_JSON_BODY: String = """{"name":"Bob","job":"painter"}""".stripMargin
+class FindAllUsersSimulation extends Simulation {
 
   //protocol
   val URL = "https://reqres.in/"
@@ -29,17 +26,13 @@ class CreateUserSimulation extends Simulation {
 
 
   //define requests
-  def createUser(): ChainBuilder = {
-    exec(
-      http("create a user").post("/api/users")
-        .body(StringBody(CREATE_USER_JSON_BODY)).asJson)
-
-  }
+  def findUsers(): ChainBuilder =
+    exec(http("find users").get("/api/users?page=2"))
 
 
   //setup scenario
-  val scn: ScenarioBuilder = scenario("create few users")
-    .exec(createUser())
+  val scn: ScenarioBuilder = scenario("find users at second page")
+    .exec(findUsers())
 
   //inject users
   setUp(

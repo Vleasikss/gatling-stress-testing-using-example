@@ -1,6 +1,9 @@
 import io.gatling.app.Gatling
 import io.gatling.core.config.GatlingPropertiesBuilder
 
+/**
+ * Uses to run the simulations
+ */
 object Engine extends App {
 
   val props = new GatlingPropertiesBuilder()
